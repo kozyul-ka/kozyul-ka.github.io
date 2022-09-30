@@ -1,0 +1,48 @@
+body {
+    background-color: #ccffcc;
+}
+.back-image {     
+   background-color: #99ff99;
+}
+
+.header-image img{
+    width: 100%;   
+}
+
+.color_1 {
+    background-color: #cccccc;
+}
+.color_2 {
+    background-color: #99cc99;
+}
+.color_3 {
+    background-color: #66cc66;
+}
+
+.color_4 {
+    background-color: #99cc99;
+}
+
+.color_5 {
+    background-color: #66cc66;
+}
+
+.color_6 {
+    background-color: #33cc33;
+}
+
+.color_7 {
+    background-color: #66cc66;
+}
+
+.color_8 {
+    background-color: #33cc33;
+}
+
+.color_9 {
+    background-color: #00cc00;
+}
+
+.important {
+    color: #cc3366;
+}
