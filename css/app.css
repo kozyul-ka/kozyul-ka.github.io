@@ -34,8 +34,8 @@ body, html
 .quiz__head
 {
 	font-size: 20pt;
-	margin: 10px;
-	margin-bottom: 50px;
+	margin: 5px;
+	margin-bottom: 10px;
 }
 
 .head__content 
@@ -68,7 +68,7 @@ body, html
 	background: #6477EB;
 	color: #fff;
 	padding: 10px 25px;
-	width: 70%;
+	width: 90%;
 	font-size: 15pt;
 	display: block;
 	margin: 2px auto;
