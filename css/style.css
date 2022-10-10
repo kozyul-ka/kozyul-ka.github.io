@@ -46,3 +46,7 @@ body {
 .important {
     color: #cc3366;
 }
+
+.auto {
+    word-wrap:normal;
+}
