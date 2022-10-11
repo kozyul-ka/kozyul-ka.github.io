@@ -46,3 +46,7 @@ body {
 .important {
     color: #cc3366;
 }
+
+.timer-center {
+    text-align: center;
+}

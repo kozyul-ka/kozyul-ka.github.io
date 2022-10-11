@@ -1,3 +1,5 @@
+import { timeToResolveTestMinutes } from './timer.js'
+
 const headElem = document.getElementById("head");
 const buttonsElem = document.getElementById("buttons");
 const pagesElem = document.getElementById("pages");
@@ -110,10 +112,10 @@ class Result {
 //Массив с результатами
 const results =
 	[
-		new Result("Вам многому нужно научиться", 3),
-		new Result("Вы уже неплохо разбираетесь", 10),
-		new Result("Ваш уровень очень высокий", 15),
-		new Result("Вы в совершенстве знаете тему", 20)
+		new Result("Вам многому нужно научиться", Math.floor(amountQuestions * 0.15)), //3
+		new Result("Вы уже неплохо разбираетесь", Math.floor(amountQuestions * 0.40)), //10
+		new Result("Ваш уровень очень высокий", Math.floor(amountQuestions * 0.75)), //15
+		new Result("Вы в совершенстве знаете тему", Math.floor(amountQuestions)) //20
 	];
 
 //Массив с вопросами
@@ -268,15 +270,45 @@ const questions =
 			])
 	];
 
-//Сам тест
-const quiz = new Quiz(1, questions, results);
 
-Update();
+const amountQuestions = 4;
+
+//Сам тест
+const questionsToDisplay = ChooseRandomQuestions(questions, amountQuestions);
+const quiz = new Quiz(1, questionsToDisplay, results);
+let timer = timeToResolveTestMinutes;
+let timerEnded = false;
+
+Update(); 
+const interval = setInterval(() => {
+	if(timer > 0) {
+		timer--
+	}
+	else {
+		timerEnded = true;
+		Update(); 
+		clearInterval(interval);
+	}
+}, 1000)
+
+function ChooseRandomQuestions(_questions, _amountQuestions) {
+	let newArrQest = [];
+	let countNewQuestions = 0;
+	while(countNewQuestions <= _amountQuestions) {
+		const i = getRandomInt(0, _questions.length);
+		const item = _questions[i];
+		if(!newArrQest.find(elem => elem.text === item.text)) {
+			newArrQest.push(item);
+			countNewQuestions++;
+		}
+	}
+	return newArrQest;
+}
 
 //Обновление теста
 function Update() {
 	//Проверяем, есть ли ещё вопросы
-	if (quiz.current < quiz.questions.length) {
+	if (quiz.current < quiz.questions.length && !timerEnded) {
 		//Если есть, меняем вопрос в заголовке
 		headElem.innerHTML = quiz.questions[quiz.current].text;
 
@@ -349,4 +381,10 @@ function Click(index) {
 
 	//Ждём секунду и обновляем тест
 	setTimeout(Update, 1000);
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
