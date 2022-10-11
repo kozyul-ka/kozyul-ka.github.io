@@ -3,6 +3,7 @@ import { timeToResolveTestMinutes } from './timer.js'
 const headElem = document.getElementById("head");
 const buttonsElem = document.getElementById("buttons");
 const pagesElem = document.getElementById("pages");
+const amountQuestions = 4;
 
 //Класс, который представляет сам тест
 class Quiz {
@@ -112,10 +113,10 @@ class Result {
 //Массив с результатами
 const results =
 	[
-		new Result("Вам многому нужно научиться", Math.floor(amountQuestions * 0.15)), //3
-		new Result("Вы уже неплохо разбираетесь", Math.floor(amountQuestions * 0.40)), //10
-		new Result("Ваш уровень очень высокий", Math.floor(amountQuestions * 0.75)), //15
-		new Result("Вы в совершенстве знаете тему", Math.floor(amountQuestions)) //20
+		new Result("Вам многому нужно научиться", Math.round(amountQuestions * 0.15)), //3
+		new Result("Вы уже неплохо разбираетесь", Math.round(amountQuestions * 0.40)), //10
+		new Result("Ваш уровень очень высокий", Math.round(amountQuestions * 0.75)), //15
+		new Result("Вы в совершенстве знаете тему", amountQuestions) //20
 	];
 
 //Массив с вопросами
@@ -271,7 +272,7 @@ const questions =
 	];
 
 
-const amountQuestions = 4;
+
 
 //Сам тест
 const questionsToDisplay = ChooseRandomQuestions(questions, amountQuestions);
