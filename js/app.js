@@ -1,9 +1,10 @@
-import { timeToResolveTestMinutes } from './timer.js'
-
 const headElem = document.getElementById("head");
 const buttonsElem = document.getElementById("buttons");
 const pagesElem = document.getElementById("pages");
-const amountQuestions = 4;
+const timerElem = window.parent.document.querySelector('.timer');
+const amountQuestions = 8;
+const timeToResolveTestSeconds = 60*3;
+
 
 //Класс, который представляет сам тест
 class Quiz {
@@ -272,30 +273,40 @@ const questions =
 	];
 
 
-
-
 //Сам тест
 const questionsToDisplay = ChooseRandomQuestions(questions, amountQuestions);
 const quiz = new Quiz(1, questionsToDisplay, results);
-let timer = timeToResolveTestMinutes;
-let timerEnded = false;
+let timerEnded = false; 
+let init = false;
+let finish = false;
 
 Update(); 
-const interval = setInterval(() => {
-	if(timer > 0) {
-		timer--
-	}
-	else {
+setTimeout(TimerCallback, 0, timeToResolveTestSeconds);
+
+function TimerCallback(currentTime){
+
+	const minutes = Math.floor(currentTime/60).toString();
+	const seconds = currentTime%60;
+	if(finish) return;
+    if(minutes < 0) {
 		timerEnded = true;
-		Update(); 
-		clearInterval(interval);
-	}
-}, 1000)
+        return;
+    }
+    const minutesToString = minutes.toString().length > 1 ? minutes.toString() : "0" + minutes.toString();
+    const secondsToString = seconds.toString().length > 1 ? seconds.toString() : "0" + seconds.toString();
+    if (timerElem !== null) {
+        timerElem.innerText = `${minutesToString} : ${secondsToString}`;
+    }
+	
+	let afterCurrTime = --currentTime;
+
+	setTimeout(TimerCallback, 1000, afterCurrTime);
+}
 
 function ChooseRandomQuestions(_questions, _amountQuestions) {
 	let newArrQest = [];
 	let countNewQuestions = 0;
-	while(countNewQuestions <= _amountQuestions) {
+	while(countNewQuestions < _amountQuestions) {
 		const i = getRandomInt(0, _questions.length);
 		const item = _questions[i];
 		if(!newArrQest.find(elem => elem.text === item.text)) {
@@ -308,6 +319,11 @@ function ChooseRandomQuestions(_questions, _amountQuestions) {
 
 //Обновление теста
 function Update() {
+
+	if(!init) {
+		init = true;
+		buttonsElem.classList.remove("display-none");
+	}
 	//Проверяем, есть ли ещё вопросы
 	if (quiz.current < quiz.questions.length && !timerEnded) {
 		//Если есть, меняем вопрос в заголовке
@@ -336,7 +352,9 @@ function Update() {
 	}
 	else {
 		//Если это конец, то выводим результат
+		finish = true;
 		buttonsElem.innerHTML = "";
+		buttonsElem.classList.add('finish');
 		headElem.innerHTML = quiz.results[quiz.result].text;
 		pagesElem.innerHTML = "Очки: " + quiz.score;
 	}

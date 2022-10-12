@@ -28,14 +28,15 @@ body, html
 .quiz-frame
 {
 	border: 0;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .quiz__head
 {
-	font-size: 20pt;
+	font-size: 18pt;
 	margin: 5px;
 	margin-bottom: 10px;
+	font-weight: 400;
 }
 
 .head__content 
@@ -88,4 +89,8 @@ body, html
 .button_passive
 {
 	background: #B3B3B3;
+}
+
+.display-none {
+	display: none;
 }
